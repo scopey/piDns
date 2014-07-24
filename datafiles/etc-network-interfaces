@@ -1,0 +1,28 @@
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+#iface eth0 inet static
+#address 192.168.1.251
+#netmask 255.255.255.0
+#dns-nameservers 192.168.1.1 8.8.8.8 8.8.4.4
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+
+# added this section to create virtual interface
+
+auto mac0
+iface mac0 inet dhcp
+#address 192.168.1.250
+#netmask 255.255.255.0
+pre-up /sbin/ip link add link eth0 mac0 address 52:8b:d9:51:d6:e7 type macvlan
+
+#auto eth0:1
+#iface eth0:1 inet static
+#	address 192.168.1.250
+#netmask 255.255.255.0
+
